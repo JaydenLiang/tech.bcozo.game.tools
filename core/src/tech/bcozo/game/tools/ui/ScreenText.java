@@ -1,4 +1,4 @@
-package tech.bcozo.game.console;
+package tech.bcozo.game.tools.ui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
