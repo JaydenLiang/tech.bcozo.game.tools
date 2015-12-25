@@ -3,14 +3,13 @@
  */
 package tech.bcozo.game.tools.ui;
 
-import java.text.NumberFormat;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
+import com.google.gwt.i18n.client.NumberFormat;
 
 /**
  * <p>
@@ -44,7 +43,7 @@ public class DigitDisplay extends Actor implements Disposable {
     public DigitDisplay(String source, int[][] regions) {
         digitTexture = new Texture(Gdx.files.internal(source));
         digits = new TextureRegion[10];
-        formatter = NumberFormat.getNumberInstance();
+        formatter = NumberFormat.getDecimalFormat();
         createTextureRegions(regions);
     }
 
@@ -67,7 +66,7 @@ public class DigitDisplay extends Actor implements Disposable {
     public DigitDisplay(String source, String region) {
         digitTexture = new Texture(Gdx.files.internal(source));
         digits = new TextureRegion[10];
-        formatter = NumberFormat.getNumberInstance();
+        formatter = NumberFormat.getDecimalFormat();
 
         String regionSettings = Gdx.files.internal(region).readString();
         int[][] regions = new int[11][4];
@@ -184,10 +183,10 @@ public class DigitDisplay extends Actor implements Disposable {
      */
     public void setDisplayFormat(int minIntegerDigits, int maxIntegerDigits,
             int minFractionDigits, int maxFractionDigits) {
-        formatter.setMinimumIntegerDigits(minIntegerDigits);
-        formatter.setMaximumIntegerDigits(maxIntegerDigits);
-        formatter.setMinimumFractionDigits(minFractionDigits);
-        formatter.setMaximumFractionDigits(maxFractionDigits);
+        // formatter.setMinimumIntegerDigits(minIntegerDigits);
+        // formatter.setMaximumIntegerDigits(maxIntegerDigits);
+        // formatter.setMinimumFractionDigits(minFractionDigits);
+        // formatter.setMaximumFractionDigits(maxFractionDigits);
     }
 
     private void clearNumber() {

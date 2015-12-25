@@ -29,12 +29,12 @@ public class GameStorage implements Disposable {
      */
     public GameStorage(String name) {
         this.name = name;
-        storageData = new ArrayList<>();
+        storageData = new ArrayList<String[]>();
     }
 
     public static GameStorage getInstanceOf(String name) {
         if (instances == null)
-            instances = new ArrayList<>();
+            instances = new ArrayList<GameStorage>();
         for (GameStorage gameStorage : instances) {
             if (gameStorage.getName().equals(name)) {
                 return gameStorage;
