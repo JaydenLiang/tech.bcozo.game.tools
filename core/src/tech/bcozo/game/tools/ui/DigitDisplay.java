@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
-import com.google.gwt.i18n.client.NumberFormat;
+//import com.google.gwt.i18n.client.NumberFormat;
 
 /**
  * <p>
@@ -26,7 +26,9 @@ public class DigitDisplay extends Actor implements Disposable {
     private TextureRegion[] digits;
     private TextureRegion[] numbers;
     private TextureRegion radixPoint;
-    private NumberFormat formatter;
+    // private NumberFormat formatter;
+    private int minIntegerDigits;
+    private int maxIntegerDigits;
 
     /**
      * <p>
@@ -43,7 +45,9 @@ public class DigitDisplay extends Actor implements Disposable {
     public DigitDisplay(String source, int[][] regions) {
         digitTexture = new Texture(Gdx.files.internal(source));
         digits = new TextureRegion[10];
-        formatter = NumberFormat.getDecimalFormat();
+        // formatter = NumberFormat.getDecimalFormat();
+        minIntegerDigits = 0;
+        maxIntegerDigits = 0;
         createTextureRegions(regions);
     }
 
@@ -66,7 +70,7 @@ public class DigitDisplay extends Actor implements Disposable {
     public DigitDisplay(String source, String region) {
         digitTexture = new Texture(Gdx.files.internal(source));
         digits = new TextureRegion[10];
-        formatter = NumberFormat.getDecimalFormat();
+        // formatter = NumberFormat.getDecimalFormat();
 
         String regionSettings = Gdx.files.internal(region).readString();
         int[][] regions = new int[11][4];
@@ -151,7 +155,8 @@ public class DigitDisplay extends Actor implements Disposable {
      */
     public void setNumber(long number) {
         int width = 0;
-        String string = formatter.format(number).replace(",", "");
+        // String string = formatter.format(number).replace(",", "");
+        String string = padZero(number, minIntegerDigits, maxIntegerDigits);
         clearNumber();
         numbers = new TextureRegion[string.length()];
         int index = 0;
@@ -187,6 +192,26 @@ public class DigitDisplay extends Actor implements Disposable {
         // formatter.setMaximumIntegerDigits(maxIntegerDigits);
         // formatter.setMinimumFractionDigits(minFractionDigits);
         // formatter.setMaximumFractionDigits(maxFractionDigits);
+        this.minIntegerDigits = minIntegerDigits;
+        this.maxIntegerDigits = maxIntegerDigits;
+
+    }
+
+    private String padZero(long number, int minIntegerDigits,
+            int maxIntegerDigits) {
+        String numString = Long.toString(number);
+        String paddingString;
+        int length = numString.length();
+        if (length >= maxIntegerDigits) {
+            return numString.substring(length - maxIntegerDigits);
+        } else if (length < minIntegerDigits) {
+            paddingString = "";
+            for (int i = 0; i < minIntegerDigits - length; i++) {
+                paddingString += "0";
+            }
+            return paddingString += numString;
+        } else
+            return numString;
     }
 
     private void clearNumber() {
@@ -221,7 +246,7 @@ public class DigitDisplay extends Actor implements Disposable {
         }
         digits = null;
         radixPoint = null;
-        formatter = null;
+        // formatter = null;
         digitTexture.dispose();
         digitTexture = null;
     }
